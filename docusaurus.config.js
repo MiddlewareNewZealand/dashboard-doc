@@ -79,6 +79,12 @@ const config = {
           },
           {
             type: 'docSidebar',
+            sidebarId: 'firestoreSidebar',
+            position: 'left',
+            label: 'Fire Store',
+          },
+          {
+            type: 'docSidebar',
             sidebarId: 'cloudFunctionsSidebar',
             position: 'left',
             label: 'Cloud Functions',
@@ -102,7 +108,7 @@ const config = {
             label: 'Best Practice',
           },
           {
-            href: '/',
+            href: 'https://github.com/MiddlewareNewZealand/dashboard',
             label: 'GitHub',
             position: 'right',
           },
@@ -146,8 +152,8 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} The Middleware Group. Built with Docusaurus.`,
       },
       prism: {
-        theme: prismThemes.vsLight,
-        darkTheme: prismThemes.vsDark,
+        theme: prismThemes.oneLight,
+        darkTheme: prismThemes.oneDark,
       },
     }),
 };

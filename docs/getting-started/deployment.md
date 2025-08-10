@@ -4,7 +4,7 @@ title: Deployment
 sidebar_label: Deployment
 sidebar_position: 4
 last_update:
-    date: 08/08/2025
+    date: 11/08/2025
     author: Ijaan Yudana
 ---
 

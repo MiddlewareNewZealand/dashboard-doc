@@ -4,7 +4,7 @@ title: Cloud
 sidebar_label: Cloud
 sidebar_position: 3
 last_update:
-  date: 08/08/2025
+  date: 11/08/2025
   author: Ijaan Yudana
 ---
 # The Cloud
@@ -118,6 +118,15 @@ looking at all of them) and might update them to a more recent version of node.j
 If you are deploying a function, ensure that all topics using this function are included in the deployment. This might
 result in topics overwriting eachother due to having different versions of the same function. 
 e.g iPayrollSyncLeaveRequestOnTopic, iPayrollSyncLeaveRequestOnScheduleWeekdayHour, etc etc....
+:::
+
+:::tip
+To select what is being synced to each field, add the field to the transform function. You can also
+look up the service to find their API (Some are more useful than others).
+:::
+
+:::warning
+If you remove a field from one of the transformers, that data will remain.
 :::
 
 :::tip

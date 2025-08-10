@@ -1,0 +1,94 @@
+---
+id: firestore-profile
+title: Profile
+sidebar_label: Profile
+sidebar_position: 1
+last_update:
+    date: 11/08/2025
+    author: Ijaan Yudana
+---
+
+# Profile
+
+The profile collection represents user data synced across various sources. Currently,
+data is coming from ipayroll and workflowmax.
+
+This is an example of a user profile:
+
+```
+Hash: 123abc456def789 (str)
+
+UpdatedAt: 1234567890 (num)
+
+birthDate: "01-Jan-01" (str)
+
+displayName: "John Doe" (str)
+
+email: "John.Doe@domain.com" (str)
+
+ipayrollId= "1234567890" (str)
+
+mobile="1234567890" (str)
+
+practice="documentation writer" (str)
+
+startDate="01-Jan-01" (str)
+
+title="documentation writer" (str)
+
+workflowId=1234567890" (str)
+```
+
+## Field sources
+
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+  <div>
+    ### iPayroll
+
+    ```
+    ipayrollId
+    title
+    startDate
+    email
+    mobile (acquired from 'phone' field in API)
+    displayName (firstnames[0]+lastname)
+    birthDate
+    ```
+  </div>
+  
+  <div>
+    ### workflowMax
+
+    ```
+    workflowId
+    practice
+    ```
+  </div>
+</div>
+
+## Relevant Cloud Functions
+
+### ipayroll
+
+ipayrollStaffOnTopic 
+
+ipayrollSyncStaffOnScheduleWeekdayFifteenMinute 
+
+ipayrollSyncStaffOnScheduleWeekdayHour 
+
+ipayrollSyncStaffOnScheduleWeekendHour 
+
+### workflowmax
+
+workflowSyncStaffOnTopic 
+
+workflowSyncStaffOnScheduleWeekdayFifteenMinute 
+
+workflowSyncStaffOnScheduleWeekdayHour
+
+workflowSyncStaffOnScheduleWeekendHour
+
+
+
+
+
