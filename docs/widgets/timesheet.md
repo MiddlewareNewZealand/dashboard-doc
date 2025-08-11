@@ -14,9 +14,9 @@ A button widget that deeplinks to the current user's workflowmax timesheet. It s
 
 ## Parameters
 
-- `userWorkflowId`: Retrieved from `redux` using `selectCurrentUserWorkflowId`. This data is called from the [`profiles collection`](../firestore/Collections/profile.mdx) in firestore.
+- `userWorkflowId`: Retrieved from `redux` using `selectCurrentUserWorkflowId`. This data is called from the [`profiles collection`](../cloud-storage/Firestore/Collections/firestore-profile) in firestore.
 
-- `workflowAccountId`: Called from the [`config collection`](../firestore/Collections/config.md) in firestore. 
+- `workflowAccountId`: Called from the [`config collection`](../cloud-storage/Firestore/Collections/firestore-config) in firestore. 
 
 ## Relevant DashboardConfig fields
 

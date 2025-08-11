@@ -79,9 +79,9 @@ const config = {
           },
           {
             type: 'docSidebar',
-            sidebarId: 'firestoreSidebar',
+            sidebarId: 'cloudStorageSidebar',
             position: 'left',
-            label: 'Fire Store',
+            label: 'Cloud Storage',
           },
           {
             type: 'docSidebar',

@@ -10,7 +10,7 @@ last_update:
 
 # Profiles
 
-This page serves as a center to centralise information on how cloud functions sync to the [profiles collection in firestore](../../firestore/Collections/profile.mdx).
+This page serves as a center to centralise information on how cloud functions sync to the [profiles collection in firestore](../../cloud-storage/Firestore/Collections/firestore-profile).
 
 ## Data provided by ipayroll
 

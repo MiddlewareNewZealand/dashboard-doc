@@ -1,0 +1,50 @@
+---
+id: hiring-page-overview
+title: Overview
+sidebar_label: Overview
+sidebar_position: 1
+last_update:
+  date: 11/08/2025
+  author: Ijaan Yudana
+---
+
+# Hiring Overview
+
+The hiring page acts as a management portal for applications for middleware, recording every step of the process, including post employment. On this page you can:
+
+- `Add a new applicant` and `upload` a cv.
+- Progress the applicant from `applied` -> `contacted` -> `interviewed` -> Hired (`Current_Employee`)/`Not_Hired` -> `Past_Employee`.
+- Search based on user fields, skills (pulled from cv), application stage.
+- `reupload` or `delete` a cv.
+- `delete` or `edit` user details and fields such as `external links`.
+- `Add` or `edit` notes per user.
+
+## Relevant Files
+
+- `hiring/index`
+
+- `hiring/detail`
+
+- `HiringApplicationForm`
+
+- `DeleteApplicationForm`
+
+- `EditApplicationHistoryForm`
+
+- `HiringContainer`
+
+- `hiringController`
+
+- `hiring.store`
+
+- `hiring.api` 
+
+- `TagSearchbar`
+
+
+import ButtonIndex from '../../../src/components/docsFeatures/overview-index.js';
+import { hiringPageOverviewButtons } from '../../../src/components/utils/overview-collections.js';
+
+## Useful Links
+
+<ButtonIndex buttons={hiringPageOverviewButtons} />
