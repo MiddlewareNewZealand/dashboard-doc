@@ -10,5 +10,21 @@ last_update:
 
 # Profiles
 
-This page concerns how various cloud functions sync to the profiles collection in
-firestore a
+This page serves as a center to centralise information on how cloud functions sync to the [profiles collection in firestore](../../firestore/Collections/profile.mdx).
+
+## Data provided by ipayroll
+
+ - `ipayrollId`
+ - `title`
+ - `startDate`
+ - `email`
+ - `mobile` (acquired from 'phone' field in API)
+ - `displayName` (firstnames[0]+lastname)
+ - `birthDate`
+
+## Topics synced to profiles
+
+[`ipayroll`](../Topics/ipayroll.mdx)
+[`workflowmax`](../Topics/workflow-max.md)
+
+

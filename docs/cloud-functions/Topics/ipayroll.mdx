@@ -12,25 +12,25 @@ last_update:
 
 iPayroll has 6 topics, but only of two categories: `SyncStaff`, and `SyncLeaveRequest`. 
 
-#### This is the full list:
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+  <div>
+    ### SyncStaff
 
-`ipayrollStaffOnTopic` 
+    - `ipayrollStaffOnTopic` 
+    - `ipayrollSyncStaffOnScheduleWeekdayFifteenMinute` 
+    - `ipayrollSyncStaffOnScheduleWeekdayHour`
+    - `ipayrollSyncStaffOnScheduleWeekendHour`
+  </div>
+  
+  <div>
+    ### SyncLeaveRequest
 
-`ipayrollSyncStaffOnScheduleWeekdayFifteenMinute` 
-
-`ipayrollSyncStaffOnScheduleWeekdayHour` 
-
-`ipayrollSyncStaffOnScheduleWeekendHour`
-
-<div style={{margin: '2rem 0'}}></div>
-
-`ipayrollSyncLeaveRequestOnTopic` 
-
-`ipayrollSyncSyncLeaveRequestOnScheduleWeekdayFifteenMinute` 
-
-`ipayrollSyncSyncLeaveRequestOnScheduleWeekdayHour` 
-
-`ipayrollSyncSyncLeaveRequestOnScheduleWeekendHour` 
+    - `ipayrollSyncLeaveRequestOnTopic` 
+    - `ipayrollSyncLeaveRequestOnScheduleWeekdayFifteenMinute` 
+    - `ipayrollSyncLeaveRequestOnScheduleWeekdayHour`
+    - `ipayrollSyncLeaveRequestOnScheduleWeekendHour`
+  </div>
+</div>
 
 # Staff Sync Functions
 
@@ -66,9 +66,8 @@ firebase deploy --only functions:ipayrollStaffOnTopic, functions:ipayrollSyncSta
 
 ### Relevant directories
 
-`functions/ipayroll`
-
-`functions/ipayroll/leaverequests`
+- `functions/ipayroll`
+- `functions/ipayroll/leaverequests`
 
 ### Relevant files
 

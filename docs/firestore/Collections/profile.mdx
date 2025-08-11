@@ -17,25 +17,15 @@ This is an example of a user profile:
 
 ```
 Hash: 123abc456def789 (str)
-
 UpdatedAt: 1234567890 (num)
-
 birthDate: "01-Jan-01" (str)
-
 displayName: "John Doe" (str)
-
 email: "John.Doe@domain.com" (str)
-
 ipayrollId= "1234567890" (str)
-
 mobile="1234567890" (str)
-
 practice="documentation writer" (str)
-
 startDate="01-Jan-01" (str)
-
 title="documentation writer" (str)
-
 workflowId=1234567890" (str)
 ```
 
@@ -45,48 +35,45 @@ workflowId=1234567890" (str)
   <div>
     ### iPayroll
 
-    ```
-    ipayrollId
-    title
-    startDate
-    email
-    mobile (acquired from 'phone' field in API)
-    displayName (firstnames[0]+lastname)
-    birthDate
-    ```
+    - `ipayrollId`
+    - `title`
+    - `startDate`
+    - `email`
+    - `mobile` (acquired from 'phone' field in API)
+    - `displayName` (firstnames[0]+lastname)
+    - `birthDate`
   </div>
   
   <div>
     ### workflowMax
 
-    ```
-    workflowId
-    practice
-    ```
+    - `workflowId`
+    - `practice`
   </div>
 </div>
 
 ## Relevant Cloud Functions
 
-### ipayroll
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+  <div>
+    ### iPayroll
 
-ipayrollStaffOnTopic 
+    - `ipayrollStaffOnTopic` 
+    - `ipayrollSyncStaffOnScheduleWeekdayFifteenMinute` 
+    - `ipayrollSyncStaffOnScheduleWeekdayHour`
+    - `ipayrollSyncStaffOnScheduleWeekendHour`
+  </div>
+  
+  <div>
+    ### workflowMax
 
-ipayrollSyncStaffOnScheduleWeekdayFifteenMinute 
+    - `workflowSyncStaffOnTopic`
+    - `workflowSyncStaffOnScheduleWeekdayFifteenMinute` 
+    - `workflowSyncStaffOnScheduleWeekdayHour`
+    - `workflowSyncStaffOnScheduleWeekendHour`
+  </div>
+</div>
 
-ipayrollSyncStaffOnScheduleWeekdayHour 
-
-ipayrollSyncStaffOnScheduleWeekendHour 
-
-### workflowmax
-
-workflowSyncStaffOnTopic 
-
-workflowSyncStaffOnScheduleWeekdayFifteenMinute 
-
-workflowSyncStaffOnScheduleWeekdayHour
-
-workflowSyncStaffOnScheduleWeekendHour
 
 
 
