@@ -91,15 +91,21 @@ const config = {
           },
           {
             type: 'docSidebar',
-            sidebarId: 'uiUxSidebar',
+            sidebarId: 'pagesSidebar',
             position: 'left',
-            label: 'UI/UX',
+            label: 'Pages',
           },
           {
             type: 'docSidebar',
-            sidebarId: 'businessLogicSidebar',
+            sidebarId: 'widgetsSidebar',
             position: 'left',
-            label: 'Business Logic',
+            label: 'Widgets',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'componentsSidebar',
+            position: 'left',
+            label: 'Components',
           },
           {
             type: 'docSidebar',

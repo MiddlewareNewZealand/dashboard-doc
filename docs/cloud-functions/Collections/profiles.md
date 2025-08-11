@@ -11,4 +11,4 @@ last_update:
 # Profiles
 
 This page concerns how various cloud functions sync to the profiles collection in
-firestore.
+firestore a

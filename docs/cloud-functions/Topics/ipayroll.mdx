@@ -1,0 +1,93 @@
+---
+id: topics-ipayroll
+title: iPayroll
+sidebar_label: iPayroll
+sidebar_position: 1
+last_update:
+  date: 11/08/2025
+  author: Ijaan Yudana
+---
+
+# iPayroll
+
+iPayroll has 6 topics, but only of two categories: `SyncStaff`, and `SyncLeaveRequest`. 
+
+#### This is the full list:
+
+`ipayrollStaffOnTopic` 
+
+`ipayrollSyncStaffOnScheduleWeekdayFifteenMinute` 
+
+`ipayrollSyncStaffOnScheduleWeekdayHour` 
+
+`ipayrollSyncStaffOnScheduleWeekendHour`
+
+<div style={{margin: '2rem 0'}}></div>
+
+`ipayrollSyncLeaveRequestOnTopic` 
+
+`ipayrollSyncSyncLeaveRequestOnScheduleWeekdayFifteenMinute` 
+
+`ipayrollSyncSyncLeaveRequestOnScheduleWeekdayHour` 
+
+`ipayrollSyncSyncLeaveRequestOnScheduleWeekendHour` 
+
+# Staff Sync Functions
+
+### Relevant directories
+
+`functions/ipayroll`
+
+`functions/ipayroll/employees`
+
+### Relevant files
+
+#### function.sync.employees
+
+Calls the `syncEmployees()` function from `service.employees.sync` at the given time periods.
+
+#### service.sync.employees
+
+Contains the builk of the business logic, particularly in `getStaff()`.
+
+#### service.transform'
+
+The `transformEmployeesResponse` function picks fields from the iPayroll API. Edit this to change fields synced to firestore.
+
+:::tip
+Here's a command to sync function edits to all staffsync functions
+
+```console
+firebase deploy --only functions:ipayrollStaffOnTopic, functions:ipayrollSyncStaffOnScheduleWeekdayFifteenMinute, functions:ipayrollSyncStaffOnScheduleWeekdayHour, functions:ipayrollSyncStaffOnScheduleWeekendHour 
+```
+:::
+
+# Staff Leave Requests Functions
+
+### Relevant directories
+
+`functions/ipayroll`
+
+`functions/ipayroll/leaverequests`
+
+### Relevant files
+
+#### function.sync.employees
+
+Calls the `syncLeaveRequests()` function from `service.leaverequests.sync` at the given time periods.
+
+#### service.sync.employees
+
+Contains the builk of the business logic, particularly in `syncLeaveRequests()`.
+
+#### service.transform'
+
+The `transformEmployeesResponse` function picks fields from the iPayroll API. Edit this to change fields synced to firestore.
+
+:::tip
+Here's a command to sync function edits to all `SyncLeaveRequest` functions
+
+```console
+firebase deploy --only functions:ipayrollSyncLeaveRequestOnTopic, functions:ipayrollSyncSyncLeaveRequestOnScheduleWeekdayFifteenMinute, functions:ipayrollSyncSyncLeaveRequestOnScheduleWeekdayHour, functions:ipayrollSyncSyncLeaveRequestOnScheduleWeekendHour 
+```
+:::
