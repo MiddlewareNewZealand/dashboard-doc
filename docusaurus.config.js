@@ -114,6 +114,12 @@ const config = {
             label: 'Best Practice',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'reduxAndApiSidebar',
+            position: 'left',
+            label: 'Redux+Api',
+          },
+          {
             href: 'https://github.com/MiddlewareNewZealand/dashboard',
             label: 'GitHub',
             position: 'right',
