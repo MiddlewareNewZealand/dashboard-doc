@@ -2,9 +2,9 @@
 id: rbac-custom-claims
 title: Custom Claims
 sidebar_label: Custom Claims
-sidebar_position: 2
+sidebar_position: 1
 last_update:
-  date: 13/08/2025
+  date: 2025/08/13
   author: Ijaan Yudana
 ---
 
