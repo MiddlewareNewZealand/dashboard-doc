@@ -4,7 +4,7 @@ title: Index
 sidebar_label: Index
 sidebar_position: 2
 last_update:
-  date: 11/08/2025
+  date: 2025/08/11
   author: Ijaan Yudana
 ---
 

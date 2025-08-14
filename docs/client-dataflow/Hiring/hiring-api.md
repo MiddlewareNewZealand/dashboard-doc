@@ -4,7 +4,7 @@ title: Api and Redux
 sidebar_label: Api + Redux
 sidebar_position: 7
 last_update:
-  date: 11/08/2025
+  date: 2025/08/11
   author: Ijaan Yudana
 ---
 

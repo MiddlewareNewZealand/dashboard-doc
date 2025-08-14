@@ -12,34 +12,72 @@ last_update:
 
 The hiring page acts as a management portal for applications for middleware, recording every step of the process, including post employment. On this page you can:
 
-- `Add a new applicant` and `upload` a cv.
+- `Add` a new applicant and `upload` a cv.
+
 - Progress the applicant from `applied` -> `contacted` -> `interviewed` -> Hired (`Current_Employee`)/`Not_Hired` -> `Past_Employee`.
+
 - Search based on user fields, skills (pulled from cv), application stage.
+
 - `reupload` or `delete` a cv.
+
 - `delete` or `edit` user details and fields such as `external links`.
+
 - `Add` or `edit` notes per user.
 
-## Relevant Files
+## Diagram
 
-- `hiring/index`
+Here is a broad overview of the hiring system.
 
-- `hiring/detail`
+![ HiringUmlDiagram ](./img/hiring-uml-diagram.png)
 
-- `HiringApplicationForm`
+The `UI` displays data from `redux`, which communicates via the `api` to the `firebaseSDK`. 
+The `client` can also call the `API` to perform actions such as `adding applicants`, and `editing data`.
+`HiringController` is used throughout the `client` as a `utility` to perform complicated actions and ensure consistency through `enums`.
 
-- `DeleteApplicationForm`
+Firebase/store will reject users that lack the required `claim(s)`. 
+Otherwise, it will perform the appropriate actions.
 
-- `EditApplicationHistoryForm`
+## Links
 
-- `HiringContainer`
+This is a visual representation of the Hiring docs in this documentation base, along with a list of links below.
 
-- `hiringController`
+![ HiringDocsDiagram ](./img/hiring-docs-diagram.png)
 
-- `hiring.store`
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+  <div>
+    #### Pages:
+    - [index](./hiring-index.md)
+    - [detail](./hiring-detail.md)
 
-- `hiring.api` 
+    #### Widgets:
+    - hiring
 
-- `TagSearchbar`
+    #### Components:
+    - HiringApplicationForm
+    - EditApplciationHistoryForm
+    - NotesCard
+    - NoPermissionsCard
+    - TagsSearchbar
+  </div>
+  
+  <div>
+    #### Client Dataflow:
+    - [Api](../../../client-datflow/Hiring/hiring-api.md)
+    - Redux
+    - HiringContainer
+    - ApplicantProfileContainer
+
+    #### Cloud:
+    - [Firestore/hiring](../../../cloud/Firestore/Collections/hiring.md)
+    - Firebase/applications
+
+    #### Util:
+    - [hiringController](../../../utils/hiring-controller.md)
+  </div>
+</div>
+
+
+
 
 
 import ButtonIndex from '../../../../src/components/docsFeatures/overview-index.js';

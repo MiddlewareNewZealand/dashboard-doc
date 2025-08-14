@@ -97,9 +97,15 @@ const config = {
           },
           {
             type: 'docSidebar',
-            sidebarId: 'reduxApiSidebar',
+            sidebarId: 'clientDataflowSidebar',
             position: 'left',
-            label: 'Redux+Api',
+            label: 'Client Dataflow',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'utilsSidebar',
+            position: 'left',
+            label: 'Utils',
           },
           {
             href: 'https://github.com/MiddlewareNewZealand/dashboard',
