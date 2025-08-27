@@ -2,7 +2,7 @@
 id: widgets
 title: Widgets
 sidebar_label: Widgets
-sidebar_position: 1
+sidebar_position: 3
 last_update:
     date: 11/08/2025
     author: Ijaan Yudana
