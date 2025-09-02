@@ -9,6 +9,12 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
+
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
+  
   title: 'Middleware Dashboard',
   tagline: '',
   favicon: 'img/middleware-logo.png',
@@ -39,7 +45,6 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-
   presets: [
     [
       'classic',
