@@ -14,6 +14,8 @@ last_update:
 
 - Make it send an email to a designated admin when travel plans are submitted
 - Dialog to show details for what pending plans an individual has (the data is already there)
+- Can edit approved plans (in case of incorrect info)
+- Can see travel plans in user profile
 
 ## Overview
 
@@ -155,7 +157,7 @@ You cannot rely on firestore to filter requests for you. If a request violates f
 ## Notes
 
 :::danger
-Travel plans makes use of SSG and hydration for quick updates and loading. If you encounter null issues, this is likely why
+Travel plans makes use of SSG and hydration for quick updates and live data. If you encounter null issues, this is likely why
 :::
 
 :::info
