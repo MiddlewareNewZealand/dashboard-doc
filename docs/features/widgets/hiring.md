@@ -2,7 +2,7 @@
 id: hiring-widget
 title: Hiring Widget
 sidebar_label: Hiring
-sidebar_position: 3
+sidebar_position: 6
 last_update:
     date: 11/08/2025
     author: Ijaan Yudana

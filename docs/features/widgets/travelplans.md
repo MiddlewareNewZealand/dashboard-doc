@@ -2,10 +2,10 @@
 id: travelplans-widget
 title: Travel Plans Widget
 sidebar_label: Travel Plans
-sidebar_position: 4
+sidebar_position: 5
 last_update:
-    date: 03/09/2025
-    author: Ijaan Yudana
+  date: 03/09/2025
+  author: Ijaan Yudana
 ---
 
 # Travel Plans
@@ -23,7 +23,7 @@ This is a widget where users can:
 
 - Submit requests to travel
 - See approved travel plans (And as such where people are going)
-- See how many pending travel plans they have 
+- See how many pending travel plans they have
 
 Admins can access a dashboard via the widget to:
 
@@ -37,24 +37,37 @@ Admins cannot
 ## Relevant Files
 
 #### Widgets
+
 - TravelPlansWidget
+
 #### Pages
+
 - travelplans/index
+
 #### Components
+
 - PendingList
 - ApprovedList
+
 #### Dialogs
+
 - CompleteTravelPlanForm
 - RequestTravelPlanForm
+
 #### Containers
+
 - PendingTravelPlansContainer
 - ApprovedTravelPlansContainer
 - admin.PendingTravelPlansContainer
 - admin.ApprovedTravelPlansContainer
 - TravelPlansContainer
+
 #### Hooks
+
 - useTravelPlans (hook)
+
 #### Redux
+
 - travelplans.epics
 - travelplans.reducer
 - travelplans.selectors
@@ -62,7 +75,7 @@ Admins cannot
 
 ## Data flow
 
-Data is stored in two firebase collections. 
+Data is stored in two firebase collections.
 
 The flow is:
 
@@ -76,83 +89,64 @@ graph TD;
     E1 --> F1[Approved plan is shown on widget with details from CompleteTravelPlan];
 ```
 
-### pending_travelplans
+### travelplans
 
-Document structure
-```json
-{
-    createdAt: DATE
-    date: STRING ("YYYY-MM-DD")
-    destination: STRING
-    duration: STRING
-    email: STRING // used to filter requests to firebase
-    notes: STRING
-    purpose: STRING
-    workflowId: STRING // used to fetch profile
-    preferences: {
-        time: STRING
+    Document structure
+    ```json
+    {
+        approvedAt: DATE
+        duration: STRING
+        email: STRING // used to filter requests to firebase
+        purpose: STRING
+        workflowId: STRING // used to fetch profile
+        travelDetails: {
+            reference: STRING
+            airline: STRING
+        }
+        arriving: {
+            airport: STRING
+            city: STRING
+            date: STRING
+            time: STRING // hh:mm
+        }
+        arriving: {
+            airport: STRING
+            city: STRING
+            date: STRING
+            time: STRING // hh:mm
+        }
+        sensitive (subcollection)
+            accommodation: {
+                name: STRING
+                reference: STRING
+                url: STRING
+            }
     }
-    requires: {
-        accommodation: BOOLEAN
-        checkin: BOOLEAN
-    }
-}
-```
-### approved_travelplans
-
-Document structure
-```json
-{
-    approvedAt: DATE
-    flightReference: STRING
-    duration: STRING
-    email: STRING // used to filter requests to firebase
-    purpose: STRING
-    workflowId: STRING // used to fetch profile
-    arriving: {
-        airport: STRING
-        city: STRING
-        date: STRING
-        time: STRING // hh:mm
-    }
-    arriving: {
-        airport: STRING
-        city: STRING
-        date: STRING
-        time: STRING // hh:mm
-    }
-    accommodation: {
-        name: STRING
-        reference: STRING
-        url: STRING
-    }
-}
-```
+    ```
 
 ## Security
 
-Security is handled through firestore rules. 
+Security is handled through firestore rules.
 
-- `email` The user's auth email and the doc's email field are used to correctly manage access.
-- `custom claims` `admin`s and `superadmin`s can edit, read, and create. But cannot approve their own requests.
+- Only `admin`s and `superadmin`s can write.
+- Only `admins`s, `superadmin`s and the travelplan's user can view data in the `sensitive` subcollection
+
+Everyone can `read` all travelplans, but an attempt to access the `sensitive` subcollection without the correct permissions will result in the silent failure of retrieving that data. The rest of the collection can still be retrieved.
 
 ```js
-    match /pending_travelplans/{doc} {
-      // Admins can read all, regular users can only read their own
-      allow read: if isAdmin() || resource.data.email == request.auth.token.email;
-      allow create; // anyone can create
-      allow update, delete: if isAdmin() || resource.data.email != request.auth.token.email; //admins cannot change their own plans
-    }
-    
-    match /approved_travelplans/{doc} {
-      allow read; //anyone can read
-      allow write: if isAdmin() || resource.data.email != request.auth.token.email; //admins cannot approve their own plans
+     match /travelplans/{doc} {
+      allow read; //anyone can read non-sensitive info
+
+      allow write: if isAdmin()
+      // Subcollection for sensitive data
+      match /sensitive/{sensitiveDoc} {
+        // Only admins and plan owners can read sensitive data
+        allow read: if isAdmin() ||
+                      request.auth.token.email == get(/databases/$(database)/documents/travelplans/$(doc)).data.email;
+        allow write: if isAdmin();
+      }
     }
 ```
-
-:::warning
-You cannot rely on firestore to filter requests for you. If a request violates firestore rules, the **entire** request will fail. Filtering must also occur on the front end in the api.
-:::
 
 ## Notes
 
@@ -161,6 +155,7 @@ Travel plans makes use of SSG and hydration for quick updates and live data. If 
 :::
 
 :::info
+
 ```mermaid
 graph LR;
     A[Firestore]--> B[Redux]
@@ -172,5 +167,5 @@ graph LR;
     D-->E[Layouts e.g UI]
     E-->D
 ```
-:::
 
+:::

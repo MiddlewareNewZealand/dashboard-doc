@@ -2,7 +2,7 @@
 id: widgets
 title: Widgets
 sidebar_label: Widgets
-sidebar_position: 3
+sidebar_position: 1
 last_update:
     date: 11/08/2025
     author: Ijaan Yudana
@@ -10,7 +10,7 @@ last_update:
 
 # Widgets
 
-Widgets are items with additional functionality that a user can add to their dashboard. 
+Widgets are items with additional functionality that a user can add to their dashboard. They are intended to be an overview of key information and notifications for the user, and should be displaying stripped down essential information, rather than having advanced functionality.
 
 The available widgets and some additional data is listed in `DashboardConfig.js` with the following format:
 

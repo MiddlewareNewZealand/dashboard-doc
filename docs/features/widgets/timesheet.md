@@ -2,7 +2,7 @@
 id: timesheet-widget
 title: Timesheet Widget
 sidebar_label: Timesheet
-sidebar_position: 2
+sidebar_position: 3
 last_update:
     date: 11/08/2025
     author: Ijaan Yudana
