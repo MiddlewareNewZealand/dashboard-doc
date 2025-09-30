@@ -15,6 +15,10 @@ Often, one collection can have many sources. Thus you will need to be able to ac
 to observe and modify data, as well as edit the functions syncing third party sources into
 these collections.
 
+:::info
+Both cloud functions v1 and cloud run (cloud functions v2) are used in this system. They are both deployed in very different ways.
+:::
+
 # Collections
 
 Collections can be accessed in the non-prod firestore console, or by clicking [here](https://console.cloud.google.com/firestore/databases/)
@@ -38,7 +42,7 @@ From here you can access and observe various collections and the data within. As
 Firebase storage is used as storage buckets for non-noSQL data. It can be accesssed through the firebase 
 console or by clicking this link [here](https://console.firebase.google.com/project/mwnz-dashboard-nonprod/storage/)
 
-# Cloud Functions
+# Cloud Functions v1
 
 To sync data to these collections we use cloud functions which can be found in the /functions directory in the
 dashboard project, or through the cloud functions 1st gen console that you can go to either through the firestore
@@ -134,6 +138,18 @@ If you go to the Logs tab, you can see a log of functions deployed. You can see 
 an affect in the firestore, but updating can take awhile, give it 10 minutes after deployment
 :::
 
+# Cloud Run 
+
+Unlike cloud functions, Cloud Run functions are fully containerised, with their own package.json. They contain their own deploy script, and should be excluded in the .gcloudignore as they shouldn't be deployed with the cloud functions.
+
+```console
+# cd to function dir
+cd /functions/rbac
+# register deploy.sh as an executable
+chmod +x ./deploy.sh
+# run deploy
+./deploy.sh
+```
 
 
  
