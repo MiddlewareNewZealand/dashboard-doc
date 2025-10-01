@@ -147,7 +147,54 @@ Remember to use the mui card system properly
 </Card>
 ```
 
-## Other
+### Const (Arrow Function) or Function
+
+In all honesty, it's a matter of preference. It could be more readable for utility functions to be a `function` and to send it to the bottom of the file, out of the way. It also makes the purpose of various bits of code more obvious. On the other hand, there are more resources that use const, with plenty of tips and tricks.
+
+:::tip
+If using a const is more convenient in your use case, but the function is very long and makes a component hard to read, consider something like
+
+```js
+const [valA, setValA] = useState(value);
+const x = ({ valB }) => {
+  return doX(valB, setValB);
+};
+// somewhere else in the code
+function doX(valB, setValB) {
+  /** lots of code */
+  setValB(valC);
+}
+```
+
+:::
+
+#### Const
+
+Use for:
+
+- Components
+
+```js
+const Component = () => (/**Do thing*/)
+```
+
+- Handlers where convenient
+
+```js
+const handlerA = (e) => (/**Do thing*/)
+```
+
+#### Function
+
+Use for:
+
+- Utility/Pure functions
+
+```js
+function Add(a, b) {
+  return a + b;
+}
+```
 
 ### Enums
 
