@@ -106,7 +106,7 @@ npm install
 # Deploy functions
 firebase deploy --only functions:[FUNCTION_NAME_A]
 # OR deploy multiple functions
-firebase deploy --only functions:[FUNCTION_NAME_A], functions:[FUNCTION_NAME_B]
+firebase deploy --only functions:[FUNCTION_NAME_A],functions:[FUNCTION_NAME_B] //no space
 ```
 
 :::danger

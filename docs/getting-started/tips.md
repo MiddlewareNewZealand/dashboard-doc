@@ -71,6 +71,14 @@ const y = () => {return <Component>} //this requires a return to return a compon
 <Button onClick={handleClick}> //this is enough if handleClilck is a const
 ```
 
+Note that this is mostly for interactive functions. You may want a function to run on init:
+
+```js
+items.map((item, index)=>{
+    <Tabs key={getKey(item, index)/>
+})
+```
+
 :::info
 For simple functions it is enough to just have it inline, however any actual logic will break react and will need to be wrapped into a const or function.
 :::
