@@ -42,7 +42,7 @@ const Component = ({x, y, z, w}) = (<React.Fragment/>)
 
 // can be:
 
-<Component {...{x, y, q:z}} w={j} /> //All options are combined for examples sake
+<Component {...{x, y, z:q}} w={j} /> //All options are combined for examples sake
 ```
 
 ### Const or Function
