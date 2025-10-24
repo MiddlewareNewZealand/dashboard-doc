@@ -4,7 +4,7 @@ title: Tips
 sidebar_label: Tips
 sidebar_position: 5
 last_update:
-  date: 2025/11/01
+  date: 2025/10/09
   author: Ijaan Yudana
 ---
 
@@ -18,6 +18,8 @@ There is a utilities.js file. Look in there for functions such as `getInitials` 
 
 ### Props
 
+There are several ways to format props that are used in this program, in general, follow whatever existing components you are interacting with use.
+
 ```js
 <Component
     x={x}
@@ -30,7 +32,7 @@ There is a utilities.js file. Look in there for functions such as `getInitials` 
 // or
 
 Props={x, y, z, w}
-return <Component {Props}>
+return <Component {... Props}>
 
 // in the component the props have to be named the same thing
 
@@ -43,6 +45,18 @@ const Component = ({x, y, z, w}) = (<React.Fragment/>)
 // can be:
 
 <Component {...{x, y, z:q}} w={j} /> //All options are combined for examples sake
+
+// some components may require
+
+<Component props={{x,y,z}} />
+
+// you can also add values in the shorthand form
+
+<Component x={x} y={y} z={q} w={'foo'} />
+
+// can be:
+
+<Component {...{x, y, z:q, w:'foo'}}>
 ```
 
 ### Const or Function
@@ -75,10 +89,6 @@ Note that this is mostly for interactive functions. You may want a function to r
 
 ```js
 items.map((item, index)=>{
-    <Tabs key={getKey(item, index)/>
+    <Tabs key={index} /> // This will not render
 })
 ```
-
-:::info
-For simple functions it is enough to just have it inline, however any actual logic will break react and will need to be wrapped into a const or function.
-:::

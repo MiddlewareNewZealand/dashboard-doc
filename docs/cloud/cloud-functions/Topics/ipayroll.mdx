@@ -32,6 +32,10 @@ iPayroll has 6 topics, but only of two categories: `SyncStaff`, and `SyncLeaveRe
   </div>
 </div>
 
+:::tip
+See [Getting Started - Cloud](../../../getting-started/cloud-guide.md) on deployment
+:::
+
 # Staff Sync Functions
 
 ### Relevant directories
@@ -48,19 +52,11 @@ Calls the `syncEmployees()` function from `service.employees.sync` at the given 
 
 #### service.sync.employees
 
-Contains the builk of the business logic, particularly in `getStaff()`.
+Contains the bulk of the business logic, particularly in `getStaff()`.
 
 #### service.transform'
 
 The `transformEmployeesResponse` function picks fields from the iPayroll API. Edit this to change fields synced to firestore.
-
-:::tip
-Here's a command to sync function edits to all staffsync functions
-
-```console
-firebase deploy --only functions:ipayrollStaffOnTopic, functions:ipayrollSyncStaffOnScheduleWeekdayFifteenMinute, functions:ipayrollSyncStaffOnScheduleWeekdayHour, functions:ipayrollSyncStaffOnScheduleWeekendHour 
-```
-:::
 
 # Staff Leave Requests Functions
 
@@ -77,16 +73,8 @@ Calls the `syncLeaveRequests()` function from `service.leaverequests.sync` at th
 
 #### service.sync.employees
 
-Contains the builk of the business logic, particularly in `syncLeaveRequests()`.
+Contains the bulk of the business logic, particularly in `syncLeaveRequests()`.
 
 #### service.transform'
 
 The `transformEmployeesResponse` function picks fields from the iPayroll API. Edit this to change fields synced to firestore.
-
-:::tip
-Here's a command to sync function edits to all `SyncLeaveRequest` functions
-
-```console
-firebase deploy --only functions:ipayrollSyncLeaveRequestOnTopic, functions:ipayrollSyncSyncLeaveRequestOnScheduleWeekdayFifteenMinute, functions:ipayrollSyncSyncLeaveRequestOnScheduleWeekdayHour, functions:ipayrollSyncSyncLeaveRequestOnScheduleWeekendHour 
-```
-:::

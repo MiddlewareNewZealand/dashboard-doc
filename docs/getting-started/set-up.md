@@ -40,6 +40,7 @@ npm start
     You may encounter a **firebase permission error** on launch
 
     But don't worry, you can click away to dismiss the modal and log in to google for authentication.
-    You do still need read AND write permissions. If you don't have the appropriate role, you can give yourself
-    write access in the firestore 'roles' collection.
+    For some (legacy) operations you may encounter write permission errors. 
+    In this case you can give yourself write access in the firestore 'roles' collection.
+    Otherwise you might need someone to give you admin/super_admin access from the /rbac page
 :::

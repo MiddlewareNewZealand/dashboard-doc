@@ -4,7 +4,7 @@ title: Travel Plans Widget
 sidebar_label: Travel Plans
 sidebar_position: 5
 last_update:
-  date: 07/10/2025
+  date: 2025/10/07
   author: Ijaan Yudana
 ---
 
@@ -16,6 +16,7 @@ last_update:
 - Dialog to show details for what pending plans an individual has (the data is already there)
 - Can edit approved plans (in case of incorrect info)
 - Can see travel plans in user profile
+- Travelplan history
 
 ## Overview
 

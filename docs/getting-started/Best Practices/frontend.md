@@ -105,6 +105,10 @@ If you really need a generic HTML element you can do something like:
 <Button LinkComponent='a'>{Children}<Button>
 ```
 
+:::warning
+For date and time, use TimePicker or DatePicker from `mui/x-date-pickers` for consistency across platforms. Leaving it to `native` web support **will** cause issues
+:::
+
 ### Styling
 
 - themes: For static changes and common colour values
@@ -198,4 +202,4 @@ function Add(a, b) {
 
 ### Enums
 
-Enums are your friend. Add them if you have consistent values you need to use across the application.
+Enums are your friend. Add them if you have consistent values you need to use across the application. Put them at the root of the system/subsystem you are making. e.g All travelplan files eventually share hooks/travelplans/utils.

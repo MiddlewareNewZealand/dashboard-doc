@@ -85,7 +85,9 @@ position:'absolute'
 
 ### Config
 
-Everything is configurable via the `WidgetConfig`. `actions` will be rendered in order in a popout `menu`, and can be hidden based on `rbac`. You can add unique functionality via the `type` (e.g add functions, links, values, rendering etc.)
+Everything is configurable via the `WidgetConfig`. `actions` will be rendered in order in a popout `menu`, and can be hidden based on `rbac`. You can add unique functionality via the `type` in `ControlMenuItems` (e.g add functions, links, values, rendering etc.)
+
+e.g type=='view' will send the view type to the `WidgetProvider`. You can retrieve this from `data.selectedView` in `useWidgetData()`
 
 ### Other features
 
