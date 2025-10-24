@@ -44,14 +44,14 @@ Admins cannot
 #### Pages
 
 - travelplans/
-- travelplans/detail?={id}
+- travelplans/detail?=id
 - travelplans/admin
-- travelplans/admin/approve?={id}
-- travelplans/admin/edit?={id}
+- travelplans/admin/approve?=id
+- travelplans/admin/edit?=id
 - travelplans/manage
 - travelplans/request/
-- travelplans/request/detail?={id}
-- travelplans/request/edit?={id}
+- travelplans/request/detail?=id
+- travelplans/request/edit?=id
 
 #### Components
 
@@ -171,7 +171,7 @@ Document structure
         }
     }
     //Flight 2
-    origin:{
+    returning:{
         date:string
         arriving:{
             city:string
@@ -211,27 +211,27 @@ Everyone can `read` all travelplans, but an attempt to access the `sensitive` su
 
 #### User
 ```mermaid
-graph TD:
+graph TD;
     A[Widget]--> B1[List]
-    B1--'Click ListItem'-->B2[Approved Travelplan details]
+    B1--'Click ListItem'--> B2[Approved Travelplan details]
     A--> B2[My Travel List]
-    B2--'RequestTravel'-->C2[Fill out RequestTravelForm]
-    B2--'Click ListItem'-->C2a[Requested travelplan details]
+    B2--'RequestTravel'--> C2[Fill out RequestTravelForm]
+    B2--'Click ListItem'--> C2a[Requested travelplan details]
 ```
 
 #### Admin
 ```mermaid
-graph TD:
+graph TD;
     A[Widget]--> B[Admin List]
-    B-->C1{Approved List}
-    C1--'confirmation dialog'>D1a[Delete Entry]
-    C1--'TravelPlanForm'-->D1b[Edit Entry]
-    C1--'TravelPlanForm'-->D1c[View Entry]
-    B-->C2{Pending List}
-    C2--'confirmation dialog'>D2a[Delete Entry]
-    C2--'RequestTravelForm'-->D2b[Edit Entry]
-    C2--'RequestTravelForm'-->D2c[View Entry]
-    C2--'TravelPlanForm'-->D2d[Approve Entry]
+    B--> C1{Approved List}
+    C1--'confirmation dialog'--> D1a[Delete Entry]
+    C1--'TravelPlanForm'--> D1b[Edit Entry]
+    C1--'TravelPlanForm'--> D1c[View Entry]
+    B--> C2{Pending List}
+    C2--'confirmation dialog'--> D2a[Delete Entry]
+    C2--'RequestTravelForm'--> D2b[Edit Entry]
+    C2--'RequestTravelForm'--> D2c[View Entry]
+    C2--'TravelPlanForm'--> D2d[Approve Entry]
 ```
 
 ## Forms
