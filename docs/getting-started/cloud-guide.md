@@ -113,6 +113,21 @@ If you go to the Logs tab, you can see a log of functions deployed. You can see 
 an affect in the firestore, most functions run every 10-15 minutes.
 :::
 
+### Trigger
+
+If your cloud function uses pub/sub, you can manually trigger cloud functions to ensure that they are working with the following steps
+
+- Select to your v1 cloud function of choice from [the list](https://console.cloud.google.com/functions/list?inv=1&invt=Ab5Ivw&project=mwnz-dashboard-nonprod)
+- Go to "Triggers"
+- There should be a pub/sub trigger. Select the last part of the topic url e.g projects/mwnz-dashboard-nonprod/topics/employees-ipayroll-sync -> employees-ipayroll-sync 
+- Enter and run the following command to your console (Message is required)
+
+```sh
+gcloud pubsub topics publish ${triggerID} --message='{"requestedBy":"admin"}'
+```
+
+- Done, you should see new information in the cloud function's logs.
+
 # Cloud Run
 
 Unlike cloud functions, Cloud Run functions are fully containerised. However, their package.json should only contain metadata, all of its environment should be set by functions/package.json.

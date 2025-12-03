@@ -4,11 +4,13 @@ title: Auth
 sidebar_label: Auth
 sidebar_position: 1
 last_update:
-  date: 11/08/2025
+  date: 2025/12/03
   author: Ijaan Yudana
 ---
 
 # Auth (RBAC)
+
+This is the fallback auth system. Middleware admins can `write`, everyone with a middleware account can `read`.
 
 Three topics are used for rbac auth.
 

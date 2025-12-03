@@ -19,7 +19,7 @@ Theme.js is used to establish palette values, and default appearances for variou
 ```js
 Mui{COMPONENT_NAME}:{
   styleOverrides:{
-    {specificity e.g root}: ({theme}) => ({ // use this syntax to use theme.palette values
+    {specificity e.g root}: ({theme:t /** Rename to prevent conflicts*/}) => ({ // use this syntax to use theme.palette values
       // sx styling here
     })
   }
@@ -29,8 +29,8 @@ Mui{COMPONENT_NAME}:{
 
 MuiCard:{
   styledOverrides:{
-    root:({theme}) => ({
-      color:theme.palette.primary.main
+    root:({theme:t}) => ({
+      color:t.palette.primary.main
     })
   }
 }
@@ -86,5 +86,4 @@ However there is convenient shorthand for palette values
 ```js
 'primary.main' vs theme.palette.primary.main
 ```
-
 :::

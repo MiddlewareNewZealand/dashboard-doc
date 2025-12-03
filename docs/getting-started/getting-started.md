@@ -4,7 +4,7 @@ title: Getting Started
 sidebar_label: Getting Started
 sidebar_position: 1
 last_update:
-    date: 08/08/2025
+    date: 2025/12/03
     author: Ijaan Yudana
 ---
 

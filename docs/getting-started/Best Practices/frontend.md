@@ -50,6 +50,7 @@ If the page is very simple, it might not be worth creating a container (assuming
 
 - Retrieves external information
 - Stores in state
+- Handles side-effects e.g is data loading in, has an error occured?
 
 ### Containers
 
@@ -116,7 +117,7 @@ For date and time, use TimePicker or DatePicker from `mui/x-date-pickers` for co
   e.g
 
 ```js
- <TableRow /> /** -> */ <StyledTableRow />
+ <TableRow /> /** -> */ <InteractiveTableRow />
 ```
 
 - sx: for unique and quick changes
@@ -203,3 +204,69 @@ function Add(a, b) {
 ### Enums
 
 Enums are your friend. Add them if you have consistent values you need to use across the application. Put them at the root of the system/subsystem you are making. e.g All travelplan files eventually share hooks/travelplans/utils.
+
+## Putting it together
+
+```js
+
+const myHook = () => {
+
+  const {isPermitted:isAdmin, isLoading:loadingRoles} = checkRoles([ADMIN, SUPER_ADMIN]) // Call to provider
+  const error = useSelector(selectError); // Call to redux selector - is automatically updated
+  const loading = useSelector(selectLoading);
+  const data = useSelctor(selectData);
+
+  // Start data stream via action call. A useEffect is useful to ensure it only runs when it's supposed to.
+  useEffect(() => {
+    if (loadingRoles){
+      return ()=>{}
+    }
+     dispatch(actions.subscribeToData(isAdmin));
+    return () => {
+      dispatch(actions.unsubscribeFromData());
+    };
+  },[loadingRoles, isAdmin]);
+
+  const saveData = useCallback((data)=>{
+    dispatch(actions.saveData(data, isAdmin))
+    },[isAdmin])
+
+  return(
+    data,
+    saveData,
+    error,
+    loading: loading || loadingRoles,
+    isAdmin,
+  )
+}
+
+/**
+ * Handle states from hook, and pass props to a given layout
+ */
+const myContainer = ({Layout = React.Fragment, Props={}}) => {
+  const {data, saveData, error, loading, isAdmin} = myHook();
+
+  if(!isAdmin) return <NoPermissionError />
+
+  if(error) return <Error message={error?.message} />
+
+  if(loading) return <Loader />
+
+  return <Layout {...Props} {...{data, saveData}} />
+}
+
+//Page
+
+const Layout = ({data, saveData}) => (
+  <Box>
+    <ListData data={data} /> //Lists live data
+    <NewDataForm saveData={saveData} /> //Can input and call save data action in this component
+  </Box>
+)
+
+const Index = () => {
+  // Potential extra logic or states
+  return <myContainer Layout={Layout} />
+}
+
+```

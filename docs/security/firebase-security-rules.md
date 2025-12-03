@@ -12,6 +12,10 @@ last_update:
 
 [Official documentation](https://firebase.google.com/docs/rules)
 
+:::tip
+[Click here](../cloud/Firestore/rules.md) For advice more specific to this project
+:::
+
 Firebase `security rules` restrict `read`/`write` access to data collections/directories based on given parameters. In our case, we make use of `custom claims`, which can be `read` from the user's auth `data`.
 
 This is where the data is truly secured. So make sure that the security rules are set correctly.
