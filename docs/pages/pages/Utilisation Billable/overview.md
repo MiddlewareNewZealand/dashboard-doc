@@ -4,77 +4,118 @@ title: pages/reports/utilisation_billable
 sidebar_label: Overview
 sidebar_position: 1
 last_update:
-  date: 2025/11/13
+  date: 2025/12/04
   author: Ijaan Yudana
 ---
 
-This page is where admins can build queries for the times database (that contains all tasks) and have it displayed in a table and line graph format.
+This page is where admins can build queries that process timesheet entries. It uses the utilisation-analytics database which pulls from the job and times collections. This data is used to display the percentage of billable vs non-billable hours by practice, job, and profile.
 
-## Data retrieval and redux
+The following is a graph of the data flow from the sources to the UI
 
-This is done by a one-time firestore request. This request uses debouncing and sleeping to ensure the whole browser doesn't freeze as each month has 2.5k or more tasks recorded.
+## Data Flow Diagram
 
-Each month is reduced to the timesByMonthRange map in the redux cache
+```mermaid
+graph TD;
+  Jobs --Firestore Trigger--> Service[Cloud Function]
+  Times --Firestore Trigger--> Service
+  Service --> utilAnalytics[utilisation-analytics]
+  utilAnalytics --saves as--> Month[Month YYYY-MM]
+  Month --> byProfile
+  Month --> byJob
+  Month --> MetaData[metadata]
+  utilAnalytics --Month Range To Client--> Redux
+  Redux --> UI
 
-i.e
-
-```js
-{'YYYY-MM':{data}}
 ```
 
-These can be retrieved if another query made in the same session overlaps with these dates. This can massive improve performance and reduces duplicate data in the cache.
-
 :::info
-Month range codes are simply a string YYYY-MM_YYYY-MM e.g '2025-08_2025-09'.
+utilisation-analytics is a collection of pre-processed data. This is done by a cloud service as even small month ranges can contain thousands of timesheet entries. This can freeze up the UI, so in absence of SQL, this is the comprimise to maintain performance.
+
+For more detail on the cloud function [Click Here](../../../cloud/Cloud%20Functions/Topics/utilisationanalytics.md)
+
 :::
 
-## Processing
+## Redux
 
-The raw times data has to be processed into something more useful for our purposes.
+A data stream is formed using a range of two months. There is a selector that creates a byPractice map (Ordered by profile practice) and applies configuration exceptions. This is done in the frontend as profiles are hydrated at this point to maintain freshness in profile data. While this could be synced to the collection via firestore triggers, that would add to the cost and size.
 
 ### Profiles
 
 All time entries with a workflowId that matches a user in the redux profiles state will have their details hydrated. Else the given name in the entry will be used.
 
-### Mapping
+### Data structure
 
-This system uses nested maps to arrange its data. These nested maps reflects the BillableHoursByProfileTable. All hours are calculated by adding up the hours of the entries below it, starting from tasks.
-
-This is what the processed hashmap looks like (The exact names are abstracted):
+Once it reaches the table, a byPractice map will look like the following:
 
 ```js
-{
-  Practice: {
-    totalOfProfilesHoursByMonth: list;
-    Profiles: {
-      totalOfJobsHoursByMonth: list;
-      Jobs: {
-        totalOfTasksHoursByMonth: list;
-        Tasks: {
-          billable: Boolean;
-          hours: num;
-          date: string;
-        }
+[
+  {
+    practice:STRING
+    profiles:[
+      {
+        name: STRING,
+​​​        profileId: STRING,
+​​​​        totalByMonth: {
+          MONTH:{
+            billable: NUM,
+  ​​​​​​          nonBillable: NUM,
+  ​​​​​​          percentageBillable: NUM,
+  ​​​​​​          total: NUM
+          }
+        },
+​​​​        totalHours: {
+          billable: NUM,
+​​​​​          nonBillable: NUM,
+​​​​​          percentageBillable: NUM,
+​​​​​          total: NUM
+        },
+        ​​​​jobs:[
+          {
+            Client:{
+              ID:STRING
+              Name:STRING
+            },
+            name: STRING,
+            dueDate: STRING-DATETIME,
+​​​​​​            estimatedHours: NUM,
+​​​​​​            isCompleted: BOOL,
+​​​​​​            jobId: STRING,
+            totalByMonth: {...},
+            totalHours: {...},
+            tasks: [
+              {
+                taskId: STRING,
+                isBillable: BOOL,
+                taskInfo: {
+                  ID: STRING,
+                  Name: STRING,
+                },
+                totalByMonth: {...},
+                totalHours: {...},
+              }
+            ]
+          }
+        ]
       }
-    }
+    ]
   }
-}
+]
 ```
 
-This is all done in `useJobData`. It is not done in the selector as that is a synchronous process that risks blocking the UI from rendering properly. By running this asynchronously, some functionality can be retained while the data is being processed.
+byProfile and byJob are simply this structure rearranged (e.g jobs:[profiles:[]] vs profiles:[jobs:[]])
 
 ### Exceptions
 
-There are numerous exceptions in the data that must be made to product the correct result. There are already default exceptions hard coded into the system, however the JobConfigurationPanel can call handlers from useJobData to edit these. An original copy of the original data has to be maintained so that these changes can be reversed within the session.
+There are numerous exceptions in the data that must be made to product the correct result. The Utilisation Analytics map in redux has a `configuration` field that is pulled by the `UtilisationAnalyticsConfigPanel`. `useJobData` has defaults hardcoded into its config which will ignore internal jobs by default, and re-label certain jobs as `billable`.
+
+The user can change this config as required. If new defaults are required, see the `OVERRIDE` constants in `useJobData`.
 
 :::info
-These exceptions can include ignoring a job in the calculations, re-categorising a job as billable or non-billable, etc.
+These exceptions can include excluding a job in the calculations, excluding practices, re-categorising a job as billable or non-billable, etc.
 :::
 
-### Table
+## Table
 
-The `BillableHoursByProfileTable` Is a nested expandable table that displays the processed hashmap. 
+The `BillableHoursByMonthTable` Is a table with nested expandable rows that displays a given `byPractice`, `byProfile`, or `byJob` hashmap. There are `parent` and `child` rows as a profile row may display different content based on whether the table is displaying data `byProfile` or `byJob`. Es-lint does not permit this to be done recursively. 
 
-### Graphs
-
-The `BillableVsNonBillableHoursByMonthGraph` is a line graph that shows hours vs months. It should be given processed data for the primary and secondary axis (i.e it cannot just received the original processed data). This is done via helper functions in the parent component.
+There is also a multi-tier system for dictating what shade of grey a row should be. It is intended to get darker the deeper you go in the nesting. 
