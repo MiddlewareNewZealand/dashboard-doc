@@ -86,13 +86,13 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'cloudSidebar',
             position: 'left',
-            label: 'The Cloud',
+            label: 'Server',
           },
           {
             type: 'docSidebar',
             sidebarId: 'clientsideDataSidebar',
             position: 'left',
-            label: 'Clientside Data',
+            label: 'Client',
           },
           {
             type: 'docSidebar',
