@@ -45,7 +45,7 @@ export const dataReducer = (state = initialState, action) => {
 ```
 
 :::tip
-If you have several different actions, you can get really specific and have a map of loading types. This can also prevent overwriting loading states which can cause problems in the frontend.
+If you have several different actions, you can get really specific and have a map of loading types. This can also prevent overwriting loading states which can cause problems in the frontend. The same can be done with errors.
 
 e.g
 
@@ -54,6 +54,11 @@ loading:{
     squares:false,
     circles:false,
     triangles:false,
+},
+errors:{
+  getRectangle:null,
+  deleteRectangle:null,
+  updateRectangle:null,
 }
 ```
 :::

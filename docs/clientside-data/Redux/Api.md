@@ -28,3 +28,7 @@ export function fetchData(isAdmin){
     return doFetchData() || [];
 }
 ```
+
+:::info
+If establishing a data stream connection, use ```observer.error()``` instead of throw new Error. This will correctly pass an error to the epic.
+:::

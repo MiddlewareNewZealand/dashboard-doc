@@ -113,6 +113,12 @@ const config = {
             label: 'Security',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'testingSidebar',
+            position: 'left',
+            label: 'Testing',
+          },
+          {
             href: 'https://github.com/MiddlewareNewZealand/dashboard',
             label: 'GitHub',
             position: 'right',
