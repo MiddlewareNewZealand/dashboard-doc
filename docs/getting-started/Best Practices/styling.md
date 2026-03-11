@@ -4,7 +4,7 @@ title: Styling
 sidebar_label: Styling
 sidebar_position: 1
 last_update:
-  date: 07/10/2025
+  date: 2026/03/12
   author: Ijaan Yudana
 ---
 
@@ -77,13 +77,12 @@ Sx should be used for unique or uncommon exceptions, in particular margins, padd
 :::info
 Always use theme colour values instead of raw hex code e.g
 
-```js
-theme.palette.primary.main vs '#7F7F7F'
-```
+`theme.palette.primary.main` vs `'#7F7F7F'`. Sometimes, using hex codes is required
 
-However there is convenient shorthand for palette values
+
+There is also convenient shorthand for palette values
 
 ```js
-'primary.main' vs theme.palette.primary.main
+'primary.main' vs `theme.palette.primary.main`
 ```
 :::

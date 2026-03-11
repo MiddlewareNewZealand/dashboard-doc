@@ -4,7 +4,7 @@ title: rules.test
 sidebar_label: rules.test
 sidebar_position: 2
 last_update:
-  date: 2026/02/11
+  date: 2026/02/20
   author: Ijaan Yudana
 ---
 

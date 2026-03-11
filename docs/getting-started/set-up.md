@@ -4,7 +4,7 @@ title: Set Up
 sidebar_label: Set Up
 sidebar_position: 2
 last_update:
-    date: 08/08/2025
+    date: 2026/03/12
     author: Ijaan Yudana
 ---
 
@@ -33,14 +33,12 @@ Ensuring that your terminal is in the correct directory (./dashboard)
 
 ```console
 npm install
-npm start
+npm start:nonprod
 ```
 
-:::warning
-    You may encounter a **firebase permission error** on launch
+:::info
+    You may encounter a **firebase permission error** pop-upn from the next.js dev overlay on launch
 
-    But don't worry, you can click away to dismiss the modal and log in to google for authentication.
-    For some (legacy) operations you may encounter write permission errors. 
-    In this case you can give yourself write access in the firestore 'roles' collection.
-    Otherwise you might need someone to give you admin/super_admin access from the /rbac page
+    But don't worry, you can click away to dismiss the modal, then log in to google for authentication. 
+    This occurs because the dashboard tries to contact firebase before authentication is established. Next.js is just creating a modal of the console error.
 :::

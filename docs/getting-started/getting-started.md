@@ -4,7 +4,7 @@ title: Getting Started
 sidebar_label: Getting Started
 sidebar_position: 1
 last_update:
-    date: 2025/12/03
+    date: 2026/03/12
     author: Ijaan Yudana
 ---
 
@@ -21,7 +21,7 @@ It will guide the user through setting up and using the environment, tooling, as
 
 - [ ] A terminal 
 
-- [ ] [Node.js >=18](https://nodejs.org/en/download) 
+- [ ] [Node.js >=20](https://nodejs.org/en/download) 
 
 - [ ] [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 

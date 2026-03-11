@@ -4,7 +4,7 @@ title: Tips
 sidebar_label: Tips
 sidebar_position: 5
 last_update:
-  date: 2025/10/09
+  date: 2026/03/12
   author: Ijaan Yudana
 ---
 
@@ -89,6 +89,6 @@ Note that this is mostly for interactive functions. You may want a function to r
 
 ```js
 items.map((item, index)=>{
-    <Tabs key={index} /> // This will not render
+    <Tabs key={index} /> // This will not render because there is no implicit return using {}, and no explicit return is declared
 })
 ```

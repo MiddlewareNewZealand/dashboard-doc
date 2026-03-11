@@ -4,7 +4,7 @@ title: Architecture
 sidebar_label: Architecture
 sidebar_position: 3
 last_update:
-    date: 2025/12/03
+    date: 2026/03/12
     author: Ijaan Yudana
 ---
 
@@ -12,10 +12,10 @@ last_update:
 
 Before we continue, it is important to establish the architecture of this system. 
 
-In this system, the client can directly interfact with the database (Using cloud-side firestore rules to protect data) or with cloud services. It is simplest to think that everything not in the `/functions` directory is client side. 
+In this system, the client can directly interact with the database (Using `firestore.rules` to protect data) or with cloud services/functions. It is simplest to of it as anything not in the `/functions` directory being client side. 
 
 :::warning
-A consequence of this is that anything client side cannot access `firebase-admin` and/or other server-side only utilities.
+`/functions` and `root` have separate `package.json` files that need to be installed for local use. They have different dependencies, and available commands.
 :::
 
 ```mermaid
@@ -55,5 +55,5 @@ graph TD;
 
 ## Security
 
-[Click here](../security/security.md) for more details. But in summary, this app uses google custom claims as its rbac security system. This adds parameters to the jwt token that can be checked. This can be used to restrict access to UI features, or to firestore data.
+[Click here](../security/security.md) for more details. In summary, this app uses google custom claims as its rbac security system. This adds parameters to the `jwt token` that can be checked, and also called via `firebase admin`, or within `firestore.rules`. This can be used to restrict access to UI features, or to firestore data.
 

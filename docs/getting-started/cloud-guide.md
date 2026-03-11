@@ -4,7 +4,7 @@ title: Cloud
 sidebar_label: Cloud
 sidebar_position: 3
 last_update:
-  date: 11/08/2025
+  date: 2026/03/12
   author: Ijaan Yudana
 ---
 
@@ -26,35 +26,28 @@ and clicking on the "(default)" link.
 
 ![table_image](../../static/img/firestore-table.png)
 
-From here you can access and observe various collections and the data within. As a quick guide to key collections:
-
-- **profile**: User data to be displayed throughout the dashboard.
-- **hiring**: User data specific to the /hiring page.
-- **roles**: Read/write permissions (You can re-write yours here if you are having issues).
-- **config**: Static variables that the user may want, but you do not want to expose in client-side code.
-- **clients**: Client data.
-- **jobs**: Job data.
-- **leave-requests-approved**: Approved leave requests from iPayroll.
-- **leave-requests-closed**: Past leave requests from iPayroll.
+From here you can access and observe various collections and the data within. While most collections only contain `documents`, some more complicated collections will contain `sub-collection(s)` within a `document`. [documentation]('https://firebase.google.com/docs/firestore/data-model')
 
 # Storage
 
-Firebase storage is used as storage buckets for non-noSQL data. It can be accesssed through the firebase
+Firebase storage is used as storage buckets for S3 data. It can be accesssed through the firebase
 console or by clicking this link [here](https://console.firebase.google.com/project/mwnz-dashboard-nonprod/storage/)
 
 # Cloud Functions v1
 
-To sync data to these collections we use cloud functions which can be found in the /functions directory in the
+To sync data to these collections we use cloud functions which can be found in the `/functions` directory in the
 dashboard project, or through the cloud functions 1st gen console. You can find this either through the firestore
 searchbar or [here](https://console.cloud.google.com/functions)
 
-These functions are not based off the literal `function`(s) or file names found in /functions, but on topics that call given functions. You will also likely want to edit and deploy these functions, this is how it is done:
+These functions are defined in a `functions.foo.js` file, and called in an `index` file in the `/functions` directory. The file structure of `/functions` does not matter (Aside from cloud services/jobs due to the custom deployment commands where the directory name is used as an id). You will also likely want to edit and deploy these functions as following:
 
-### Edit
+### Editing
 
-Better practice is to edit it on your local git repo clone. However in a pinch you can click a topic, go to source,
-and edit the code for that topic there. Mind that this can cause issues if multiple topics use the same function as this
-only edits the source code for that one topic.
+You should edit in a local branch and **not** edit via the `source` tab in the cloud functions UI. Otherwise it can be hard to review what is actually going on within a function.
+
+:::warning
+For functions that use `hashing` for detecting changes, remember that it is detecting changes in `incoming` data, it is not comparing it to data *already* in firestore.
+:::
 
 ### Deploy
 
@@ -92,20 +85,11 @@ npm run deploy:functions:nonprod -- --[FUNCTION_NAME_A] --[FUNCTION_NAME_B]
 This is just a fancy wrapper in functions/package.json that uses firebase deploy --only functions:[FUNCTION_NAME]
 
 :::danger
-DO NOT deploy all functions, but if you must:
-
-```console
-npm run deploy:functions:all:nonprod
-```
-
+DO NOT deploy all functions via firebase deploy (Unless deploying to prod), but if you must:
 :::
 
 :::tip
-Usually, there is only one function doing actual work, the rest just publish jobs and do not need to be updated. i.e iPayrollSyncLeaveRequestOnTopic vs iPayrollSyncLeaveRequestOnScheduleWeekdayHour
-:::
-
-:::warning
-If you remove a field from one of the transformers, that data will remain. Similarly, if you manually remove a field, the data will not detect a change unless the data from the source changes.
+Usually, there is only one function doing actual work despite the similar names. The rest just publish to the pub/sub and do not need to be updated - unless you have made changes to those functions i.e iPayrollSyncLeaveRequestOnTopic vs iPayrollSyncLeaveRequestOnScheduleWeekdayHour
 :::
 
 :::tip
@@ -122,15 +106,17 @@ If your cloud function uses pub/sub, you can manually trigger cloud functions to
 - There should be a pub/sub trigger. Select the last part of the topic url e.g projects/mwnz-dashboard-nonprod/topics/employees-ipayroll-sync -> employees-ipayroll-sync 
 - Enter and run the following command to your console (Message is required)
 
+Alternatively, you can check the topic used in the `functions.foo.js` file, if it is easier to find.
+
 ```sh
-gcloud pubsub topics publish ${triggerID} --message='{"requestedBy":"admin"}'
+gcloud pubsub topics publish ${topic} --message='{"requestedBy":"admin"}'
 ```
 
 - Done, you should see new information in the cloud function's logs.
 
 # Cloud Run
 
-Unlike cloud functions, Cloud Run functions are fully containerised. However, their package.json should only contain metadata, all of its environment should be set by functions/package.json.
+Unlike cloud functions, Cloud Run functions are fully `containerised`. However, their package.json should only contain metadata, all of its environment should be set by `functions/package.json`.
 
 You can deploy it via:
 

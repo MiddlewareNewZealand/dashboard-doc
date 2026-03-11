@@ -8,8 +8,3 @@ last_update:
   author: Ijaan Yudana
 ---
 
-## Shared
-
-### Firebase
-
-### UI
