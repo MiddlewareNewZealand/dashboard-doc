@@ -1,14 +1,18 @@
 ---
 id: topics-auth
 title: Auth
-sidebar_label: Auth
+sidebar_label: Auth (deprecated)
 sidebar_position: 1
 last_update:
-  date: 2025/12/03
+  date: 2026/03/12
   author: Ijaan Yudana
 ---
 
-# Auth (RBAC)
+# Auth (RBAC) - DEPRECATED
+
+:::danger
+This system has been fully deprecated and has been replaced with custom claims. The collection may remain, but it is not used.
+:::
 
 This is the fallback auth system. Middleware admins can `write`, everyone with a middleware account can `read`.
 

@@ -4,13 +4,13 @@ title: iPayroll
 sidebar_label: iPayroll
 sidebar_position: 1
 last_update:
-  date: 2025/08/11
+  date: 2026/03/12
   author: Ijaan Yudana
 ---
 
 # iPayroll
 
-iPayroll has 6 topics, but only of two categories: `SyncStaff`, and `SyncLeaveRequest`. 
+iPayroll has 6 topics divided into two categories: `SyncStaff`, and `SyncLeaveRequest`. These hit different entry points of the ipayroll `api`.
 
 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
   <div>
@@ -32,49 +32,77 @@ iPayroll has 6 topics, but only of two categories: `SyncStaff`, and `SyncLeaveRe
   </div>
 </div>
 
-:::tip
-See [Getting Started - Cloud](../../../getting-started/cloud-guide.md) on deployment
-:::
+## Relevant files
 
-# Staff Sync Functions
+#### function.sync.[category]
 
-### Relevant directories
+Calls the `sync[category]()` function from `service.[category].sync` at the given time periods.
 
-`functions/ipayroll`
+#### service.sync.[category]
 
-`functions/ipayroll/employees`
-
-### Relevant files
-
-#### function.sync.employees
-
-Calls the `syncEmployees()` function from `service.employees.sync` at the given time periods.
-
-#### service.sync.employees
-
-Contains the bulk of the business logic, particularly in `getStaff()`.
+Co-ordinates the fetch, hash check, and processing of the request.
 
 #### service.transform'
 
-The `transformEmployeesResponse` function picks fields from the iPayroll API. Edit this to change fields synced to firestore.
+The `transform[category]Response` function picks fields from the iPayroll API. Edit this to change fields synced to firestore.
 
-# Staff Leave Requests Functions
+# Timeline
 
-### Relevant directories
+## Employees
 
-- `functions/ipayroll`
-- `functions/ipayroll/leaverequests`
+```mermaid
+  graph TD;
 
-### Relevant files
+  schedule[ipayrollSyncStaffOnSchedule]--sync topic - args: {page: 0, size}--> syncOnTopic[ipayrollSyncStaffOnTopic]
+  syncOnTopic --> service[syncEmployees]
+  service --> restOfPages[publishStaffPageSync]
+  restOfPages --rest of pages--> schedule
+```
 
-#### function.sync.employees
+## Leave Requests
 
-Calls the `syncLeaveRequests()` function from `service.leaverequests.sync` at the given time periods.
+```mermaid
+  graph TD;
 
-#### service.sync.employees
+  schedule[ipayrollSyncLeaveRequestOnSchedule]--sync topic - args: {page: 0, size, status}--> syncOnTopic[ipayrollLeaveRequestOnTopic]
+  syncOnTopic --> service[syncLeaveRequests]
+  service -->isLastPage{is last approved page}
+  isLastPage --false--> restOfPages[publishLeaveRequestPageSync]
+  isLastPage --true--> todo[send topic with closed status and new page] --> syncOnTopic
+  restOfPages --> closedAction[now sync closed status]
+  closedAction --send topic with closed status and page 0--> syncOnTopic
+  
+```
 
-Contains the bulk of the business logic, particularly in `syncLeaveRequests()`.
+The goal here is to sequentially hit the ipayroll database to avoid rate limits. 
 
-#### service.transform'
+- publishLeaveRequestPageSync will publish a sync topic every 5 seconds (It takes ~3 seconds to sync 100 items).
+- Approved and closed leave requests are done one after the other, not at the same time.
 
-The `transformEmployeesResponse` function picks fields from the iPayroll API. Edit this to change fields synced to firestore.
+# Interceptors
+
+Found in `ipayroll.api.client.js` This creates an `axios` instance, which will retrieve a new `token` for every `request` 
+made, instead of getting the token at the start of the function and passing it down. This ensures that every request is 
+made with a fresh token.
+
+If this request fails due to 401, it will attempt to get a new token. This is because the token can become invalidated if rate limits are
+hit, and the token will not be refreshed otherwise if it has not hit its lifetime.
+
+## getCurrentToken
+
+Found in `service.oauth.ipayroll.js` this handles refreshing the token when expired. 
+
+```mermaid
+
+graph TD;
+
+firestore --get token--> isExpired{isExpired}
+isExpired --true--> refresh[refresh token]
+refresh --> return[return token]
+refresh --update token--> firestore
+isExpired --false--> return
+```
+
+Expiry conditions:
+- Tokens have a 5 minute liftime (hardcoded as refresh token provides 10 minutes till expiry - which is false)
+- Under 2 minutes till lifetime end.

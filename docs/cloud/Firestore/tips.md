@@ -15,23 +15,34 @@ e.g
 #### data:
 
 - `File 1` - protected
+- - `email`: `other email`
 - `File 2`
+- - `email`: `your email`
 - `File 3`
+- - `email`: `your email`
 
 #### request:
 
-Get all data
+List data where `email`==`your email`
+
+:::danger
+Any .where() statement WILL count as a list request.
+:::
 
 #### result:
 
-Request fails as request attempts to retrieve `File 1`
+Request fails as request checks whether `File 1` has a matching email. This counts as a `get` request to a document you are not permitted to view.
 
 #### solution:
 
 Either construct the request in a way that avoids `File 1`. Here are some options:
 
-- Check params e.g email, id
-- Create a `sub-collection` to store granularly protected data, these requests are allowed to fail
+- Build all `doc ids` you could potentially have access to and perform single queries in a loop (NO WHERE STATEMENTS). This must handle
+the query failing, as not all these docs will exist (Or they might).
+
+#### In the case where files are granularly protected i.e only certain users can view the full document
+
+- Create a `sub-collection` to store granularly protected data, these requests are allowed to fail.
 - Connect data in another collection via a `shared key` e.g collectionA and collectionB have a document that shares the same doc id. This is done in travelplans, example:
 
 ```

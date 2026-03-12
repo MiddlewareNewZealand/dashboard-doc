@@ -1,108 +1,57 @@
 ---
 id: utilisation
-title: Utilisation
-sidebar_label: Utilisation
+title: Utilisation Analytics
+sidebar_label: Utilisation Analytics
 last_update:
-  date: 2025/12/16
+  date: 2026/03/12
   author: Ijaan Yudana
 ---
 
-The cloud system for forecasting has its own tab as it is unique compared to the other cloud functions and services.
-
-The cloud function that syncs jobs and times into utilisation-analytics works off of a list of jobs. This could be a problem because it doesn't fully reflect the actual time sheet data, it may exclude certain jobs. Therefore, a complete list of jobs (from v2) is required.
-
 ```mermaid
 graph TD;
-Jobs --Firestore Trigger--> utilisationAnalyticsUpdateSyncOnXChange
-Times --Firestore Trigger--> utilisationAnalyticsUpdateSyncOnXChange
-utilisationAnalyticsUpdateSyncOnXChange --Writes to --> U_A[utilisation-analytics]
-U_I[User Input] --Writes to --> U_F[utilisation-forecasts]
-U_F --> Redux
-U_A --> Redux
-Redux --> UI
+
+    wfm[workflowmax] --> jobChange[captureJobChangeOnWrite]
+    ipayroll --> timeChange[captureTimesheetChangeOnWrite]
+    jobChange --> buffer
+    timeChange --> buffer
+    buffer --> schedule[analyticsUtilisationIncrementalSyncOnSchedule]
+    
+    wfm --> full[analyticsUtilisationFullSyncOnTopic]
+    ipayroll --> full
+    schedule --> processor[processor service]
+    full --> processor
+    staffHours[staff working hours] --> processor
+    processor --> firestore
 ```
 
-## utilisation-analytics collection
+:::warning
+Incremental sync works on delta data (To reduce processing). Therefore, if anything happens to the buffer, it can go out of sync. If doing a full sync,
+ensure that the buffer is clear.
+:::
 
-Structure:
+## Collections
 
-```
-utilisation-analytics
-> month
->> byJob
->>> Job
->> byProfile
->>> Profile
->> company-totals
->> metadata
-```
+### utilisation-forecasts
 
-### byJob subcollection
+Contains user input forecast data
 
-Job document structure
+### utilisation-analytics-buffer
 
-```
-jobId: {
-    updatedAt: NUMBER,
-    name: STRING,
-    clientManagerUUID: STRING,
-    dueDate: STRING (YYYY-MM-DD),
-    estimatedHours: NUMBER,
-    isCompleted: BOOLEAN,
-    jobId: STRING,
+Contains changed data from jobs/timesheets
 
-    client: {
-        ID: UUID
-        Name: STRING
-    },
-    totalHours: {
-        billable: NUMBER,
-        nonBillable: NUMBER,
-        percentageBillage: NUMBER,
-        total: NUMBER
-    },
-    profiles: [
-        {
-            billableRate: NUMBER,
-            name: STRING,
-            practice: STRING,
-            profileId: NUMBER,
-            totalHours: {
-                billable: NUMBER,
-                nonBillable: NUMBER,
-                percentageBillage: NUMBER,
-                total: NUMBER
-            },
-            tasks: [
-                {
-                    hours:{
-                        billable: NUMBER,
-                        nonBillable: NUMBER,
-                        percentageBillage: NUMBER,
-                        total: NUMBER
-                    },
-                    isBillable: BOOLEAN,
-                    taskId: STRING
-                    taskInfo: {
-                        ID: STRING,
-                        Name: STRING
-                    }
-                }
-            ]
-        }
-    ]
-}
-```
+### utilisation_analytics-jobs
 
-### byProfile subcollection
+Contains relevant job data (Main addition is total hours per job)
 
-Profile document structure
+### utilisation_analytics-months
 
-```
-workflowId: {
-    month: STRING (YYYY-MM),
-    name: STRING,
-    practice: STRING,
-    profileId: STRING (workflowId),
-}
-```
+Contains hour data for each user_job entry by month (In a subcollection for data protection)
+
+### utilisation_analytics-profiles
+
+Contains normalised profile data (Departed profiles are no longer in profiles, but have rudimentary data in times/jobs. This prevents gaps in historical data)
+
+### utilisation_analytics-job_manager_index
+
+Can be freely accessed by job managers, allows them to get a list of what jobs they manage without leaking important data.
+
