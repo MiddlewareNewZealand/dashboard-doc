@@ -4,7 +4,7 @@ title: Set Up
 sidebar_label: Set Up
 sidebar_position: 2
 last_update:
-    date: 2026/03/12
+    date: 2026/03/24
     author: Ijaan Yudana
 ---
 
@@ -33,8 +33,12 @@ Ensuring that your terminal is in the correct directory (./dashboard)
 
 ```console
 npm install
-npm start:nonprod
+npm run start:nonprod
 ```
+
+:::warning
+```npm run start``` connects to the prod database, please do not use this.
+:::
 
 :::info
     You may encounter a **firebase permission error** pop-upn from the next.js dev overlay on launch

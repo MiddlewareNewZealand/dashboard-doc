@@ -4,7 +4,7 @@ title: Styling
 sidebar_label: Styling
 sidebar_position: 1
 last_update:
-  date: 2026/03/12
+  date: 2026/03/24
   author: Ijaan Yudana
 ---
 
@@ -86,3 +86,21 @@ There is also convenient shorthand for palette values
 'primary.main' vs `theme.palette.primary.main`
 ```
 :::
+
+## Imports
+
+We have updated our version of next, allowing for more useful import syntax. 
+
+You will still see a lot of the old version around:
+
+```js
+import foo from '../../../bar'
+```
+
+However, now it will be possible to import with:
+
+```js
+import foo from '@dir/bar'
+```
+
+This is less fragile and significantly more readable, so use it more going forwards.
