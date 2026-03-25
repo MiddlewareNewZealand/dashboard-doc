@@ -7,6 +7,14 @@ last_update:
   author: Ijaan Yudana
 ---
 
+:::info
+[Click here](../../../clientside-data/Systems/Forecasting/Overview.md) to see how the client-side api works.
+
+or
+
+[Click here]('../../../../../pages/pages/Utilisation%20Forecasting/overview.md') to see how the front-end data layer works.
+:::
+
 ```mermaid
 graph TD;
 
@@ -91,6 +99,3 @@ The above writes are done to the utilisation*analytics*[months/job/job-manager] 
 
 - To the utilisation_analytics-profiles collection in firestore.
 
-## Front end
-
-[Go Here]('../../../../../pages/pages/Utilisation%20Forecasting/overview.md') For how the front-end uses this data
