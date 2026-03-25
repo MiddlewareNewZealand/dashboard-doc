@@ -1,7 +1,7 @@
 ---
 id: utilisation
-title: Utilisation Analytics
-sidebar_label: Utilisation Analytics
+title: Utilisation Forecasting
+sidebar_label: Utilisation Forecasting
 last_update:
   date: 2026/03/24
   author: Ijaan Yudana
