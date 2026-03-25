@@ -28,6 +28,25 @@ staff-working-hours
     viewMode --practice--> by practice
 ```
 
+## Notes
+
+- The relation between profiles and jobs are established via the `staffAssigned` parameter in each job object.
+- Totals are retrieved from the job object, some other totals are also calculated here to account for changing definitions (i.e totals.total).
+
+Data sent to the table should hav a structure such as:
+
+```
+{
+    id,
+    data for row, // {id, name, months, totals} months has all the hours data for each month
+    map of data for child rows, // profile/job object - contains ids and row data, monthsArray, functions etc. are provided by the parent row
+    monthsArray, // An array of YYYY-MM strings for each month - this is split into actual and forecast months in the row
+    ...functions,
+    ...props,
+    index,
+}
+```
+
 ## By Profile
 
 Compile a list of profile rows with aggregate data for that profile, as well as child job rows.
