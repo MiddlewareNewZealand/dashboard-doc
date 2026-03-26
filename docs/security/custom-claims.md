@@ -47,5 +47,12 @@ The following is a simplified diagram of how custom claims is managed and restri
   USER[User]--Requests--> FIREBASE_SDK
 ```
 
+## Adding new roles
+
+Adding new roles is simple and is done as following:
+
+- [ ] Add new role to CLAIMS map in `functions/rbac/utils/consts.js` *and* `src/redux/rbac/rbac.consts.js`
+  - These must be THE SAME
+- [ ] Redeploy RBAC service in **both** prod and non-prod via `npm run deploy:cloudrun:[prod/nonprod] -- --rbac`
 
 

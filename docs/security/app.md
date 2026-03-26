@@ -14,6 +14,6 @@ _app is the first thing that the user interacts with when accessing the dashboar
 
 - It should not send any redux requests to firestore before authenticating via the login page. 
 
-- It should log out all non `@middleware.co.nz` requests and not make any redux requests.
+- It should reject all non `@middleware.co.nz` requests.
 
 - This is also the layer where the front end `claim manager` is. Allowing for the front-end to dynamically change based on the custom claims in the user's jwt token.
