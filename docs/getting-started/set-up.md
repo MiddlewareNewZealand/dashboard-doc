@@ -10,6 +10,12 @@ last_update:
 
 # Setting up the repo on your local machine
 
+:::tip
+Please ensure that you have the correct permissions to access the github page. If you need `admin` roles, please have a current `admin` or `superadmin` assign it to you via the `/rbac` page.
+
+It can take a bit for the users to load on the page. This page also has to be manually typed in, there is no button.
+:::
+
 ## Clone and pull 
 
 ### [Dashboard github repo](https://github.com/MiddlewareNewZealand/dashboard)
