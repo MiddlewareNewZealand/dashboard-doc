@@ -22,7 +22,7 @@ or
 graph TD;
     Analytics[Analytics Collection]--data--> Redux
     Redux --New Entries--> Forecasts
-    Forecasts[Forecasts Collection] --data--> Redux
+    Forecasts[Forecasts Collection or getDataForJobManager function] --data--> Redux
     Redux <--data--> Hook
     Hook <--data--> Processor
     Hook <--data, functions--> UI

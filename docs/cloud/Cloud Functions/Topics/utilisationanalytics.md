@@ -17,7 +17,6 @@ or
 
 ```mermaid
 graph TD;
-
     wfm[workflowmax] --> jobChange[captureJobChangeOnWrite]
     ipayroll --> timeChange[captureTimesheetChangeOnWrite]
     jobChange --> buffer
@@ -99,3 +98,32 @@ The above writes are done to the utilisation*analytics*[months/job/job-manager] 
 
 - To the utilisation_analytics-profiles collection in firestore.
 
+## getDataForJobManager
+
+This function pulls and returns utilisation and forecasting data for a given job manager (Identity is verified via jwt token).
+
+:::important
+When deploying this, ensure that .env.[prod/nonprod] has the `NEXT_PUBLIC_UTILISATION_URL` field. The url is found in:
+
+cloud run functions website / functions (1st Gen) / Details: getDataForJobManager / Trigger
+
+Without this, the redux api has no url to call when attempting to call this function.
+:::
+
+### Flowchart
+
+```mermaid
+  graph TD;
+  req[Request] --token and dates--> function
+  function --validation--> service
+  service --> index[Get jobs managed by job manager]
+  subgraph fetchDataForJobManager
+  index --> jobs[filter for jobs in range]
+  jobs --> profiles[get profiles from unique profiles in managed jobs' staffAssigned]
+  profiles --> months[get by month timesheet data from managed jobs]
+  months --> forecasts[get forecasts for managed jobs]
+  forecasts --> return["Return map of {months, jobs, profiles, forecasts}"]
+  end
+  return --> conclude["Return map to user"]
+
+```

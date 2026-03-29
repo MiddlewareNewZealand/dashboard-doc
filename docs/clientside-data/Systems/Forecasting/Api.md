@@ -14,12 +14,12 @@ last_update:
     graph TD;
 
     entry{Job Manager or Forecast Mode} --Job Manager--> restricted[Restricted Pathway]
-    restricted --> index[Get list of jobs owned by the job manager from the job manager index]
-    index --> jobs[Get full job data]
-    jobs --profile ids from 'staffAssigned' param in each job--> profiles[Get profile data from aggregated list of assigned profiles]
-    profiles --> months[Get timesheet data by querying all jobId-profileId combinations for months in given range]
-    months --> forecasting[Get forecasting data by querying all jobId-profileId combinations for months in given range]
-    forecasting --> return[Return raw data results]
+    restricted --> index[Get data from fetchDataForJobManager cloud function]
+    index --> profiles[Normalise profiles]
+    profiles --> jobs[Normalise Jobs]
+    jobs --> forecasts[Normalise forcasts]
+    forecasts --> months[Keep months as is]
+    months --> return
 
     entry --Finance--> unrestricted[Unrestricted Pathway]
     unrestricted --> urmonths[Get all timesheet data in month range]
@@ -31,11 +31,17 @@ last_update:
 
 ## Notes:
 
-- Timesheet data is held, sorted by month, in the utilisation_analytics-months collection
-- Restricted must query individually because firestore cannot have dynamic rules for LIST queries
+- Data is normalised in the front end so that the data structure can be changed without having to redeploy the cloud function
+- Job managers call a cloud functions because dynamic firestore rules do not work with LIST requests. Therefore, a cloud function bypasses this rule (It validates via the user's jwt token) and can retrieve the data significantly more efficiently than individual GET requests, especially because the latter method requires querying each potential combination of JobId-ProfileId.
 
 ## Is job in range calculation
 
 - Is not in range if complete and has ended before the given start date 
 - Is not in range if the job start date is after the given end date
 - Is in range if not complete
+
+- For job managers, this filtering is done inside the cloud function.
+
+:::warning
+This means that if the `isJobInRange` function has to be changed, make sure **both** are changed.
+:::
