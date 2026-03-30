@@ -13,5 +13,6 @@ Selectors are used to retrieve data from the redux state (Assumedly after data h
 ```js
 const selectProfilesState = (state) => state.profiles; // See redux state for what is available (In next dev mode)
 
-export const selectProfiles = createSelector(selectProfilesState, (state) => state.profiles); // This is called elsewhere to retrieve the data
+// This is called elsewhere to retrieve the data
+export const selectProfiles = createSelector(selectProfilesState, (state) => state.profiles); 
 ```
