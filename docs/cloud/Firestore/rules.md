@@ -11,7 +11,7 @@ last_update:
 # Firestore Rules
 
 :::tip
-[Click here](../../security/firebase-security-rules.md) for more general advice on how to write these rules.
+[Click here](../../security/firestore-rules.md) for more general advice on how to write these rules.
 :::
 
 Firestore rules are crucial in ensuring the security of data. Even if you restrict data than can be retrieved by the frontend via the api in redux, always assume that someone will try to query the database directly.

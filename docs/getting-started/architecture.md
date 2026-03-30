@@ -28,7 +28,7 @@ graph TD;
 
 ## Clientside APIs
 
-[Click here](../clientside-data/Overview.md) for more detail. But in summary, this external data can be retrieved via redux which will help handle side-effects like loading, and errors. Or inside a component, though this is not preferred.
+[Click here](../clientside-data/Standard%20Patterns/Overview.md) for more detail. But in summary, this external data can be retrieved via redux which will help handle side-effects like loading, and errors. Or inside a component, though this is not preferred.
 
 The following is the average external api call.
 

@@ -4,11 +4,17 @@ title: Overview
 sidebar_label: Overview
 sidebar_position: 1
 last_update:
-  date: 11/08/2025
+  date: 2026/03/30
   author: Ijaan Yudana
 ---
 
 # Hiring Overview
+
+:::warning
+Several of the documents referred to in the diagrams have been deprecated from documentation. 
+
+The `ApplicantProfileContainer` uses the old React syntax - if this needs to be changed, it would be better to update to the latest syntax used for containers (see getting started/frontend)
+:::
 
 The hiring page acts as a management portal for applications for middleware, recording every step of the process, including post employment. On this page you can:
 
@@ -24,6 +30,11 @@ The hiring page acts as a management portal for applications for middleware, rec
 
 - `Add` or `edit` notes per user.
 
+## Pages
+
+There are two pages: `index` and `detail`. `detail` shows the `cv`, `progress` and other details of a given applicant. 
+`index` shows a list of all applicants, sortable by field, and filterable by parameter and/or progress.
+
 ## Diagram
 
 Here is a broad overview of the hiring system.
@@ -31,11 +42,12 @@ Here is a broad overview of the hiring system.
 ![ HiringUmlDiagram ](./img/hiring-uml-diagram.png)
 
 The `UI` displays data from `redux`, which communicates via the `api` to the `firebaseSDK`. 
+
 The `client` can also call the `API` to perform actions such as `adding applicants`, and `editing data`.
+
 `HiringController` is used throughout the `client` as a `utility` to perform complicated actions and ensure consistency through `enums`.
 
-Firebase/store will reject users that lack the required `claim(s)`. 
-Otherwise, it will perform the appropriate actions.
+Firebase/store will reject users that lack the required `claim(s)`. Otherwise, it will perform the appropriate actions.
 
 ## Links
 

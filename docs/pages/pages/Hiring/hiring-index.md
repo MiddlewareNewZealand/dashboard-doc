@@ -4,11 +4,15 @@ title: Index
 sidebar_label: Index
 sidebar_position: 2
 last_update:
-  date: 2025/08/11
+  date: 2026/03/30
   author: Ijaan Yudana
 ---
 
 # Index Page
+
+:::warning
+This image lacks the new `job role` field.
+:::
 
 ![ index page ](./img/index-page.png)
 
@@ -33,13 +37,15 @@ A list of stage enums in order, matching `TAB_LABELS`. These are used to filter 
 
 Uses Material UI's [`Autocomplete`](https://mui.com/material-ui/react-autocomplete/), [`Chip`](https://mui.com/material-ui/react-chip/), and [`Textfield`](https://mui.com/material-ui/react-text-field/) to achieve a tag-like search system similar to the one [here](https://mui.com/material-ui/react-autocomplete/#multiple-values).
 
-It matches based on all fields in [`profile`](../../cloud-storage/Firestore/Collections/profile.mdx), particularly on the skills list which is extracted upon cv upload. The match button changes the filter between an AND and OR operator, either only including results that match all parameters, or including results that just match one.
+It matches based on all fields in `profile`, particularly on the skills list which is extracted upon cv upload. The match button changes the filter between an AND and OR operator, either only including results that match all parameters, or including results that just match one.
 
 In the future this might need to use a search engine as the list of profiles grow. This has been moved to a component called TagSearchbar for increased modularity, maintanability and readability.
 
 ## Profile List (Table)
 
-Displays a `paginated` list of `profiles` from the [`profile` collection](../../cloud-storage/Firestore/Collections/profile.mdx) filtered based on the `selectedTab`, `searchTerms`, and `matchMode`.
+Displays an infinite list of `profiles` from the `profile` collection filtered based on the `selectedTab`, `searchTerms`, and `matchMode`.
+
+Clicking on a field in the `header` will sort by `ascending` or `descending` for that parameter (Except excluded fields)
 
 Each `ProfileRow` component will display the user's `icon`, `name`, `email`, `phone`, `current stage`, `application date`, and `delete button`.
 
@@ -51,4 +57,4 @@ Clicking on the `delete button` will provide a confirmation dialog on deleting t
 
 ## Add Applicant Button
 
-A `button` above the `profile list table` that prompts the user with a [`HiringApplicationForm`](../Hiring/hiring-application.md) dialog.
+A `button` above the `profile list table` that prompts the user with a `HiringApplicationForm` dialog.
