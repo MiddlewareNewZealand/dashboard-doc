@@ -4,7 +4,7 @@ title: Custom Claims
 sidebar_label: Custom Claims
 sidebar_position: 4
 last_update:
-  date: 2026/02/10
+  date: 2026/03/31
   author: Ijaan Yudana
 ---
 
@@ -20,7 +20,7 @@ Before starting on technical implementation, it is imperative to keep two things
 
 On the `client` side, `custom claims` is **only** useful for `user experience` and is **not** secure, it **can** be bypassed. That is to say, it is useful for ensuring that users don't get confused when, say, clicking a `button` their `role` cannot interact with fails. Always assume that a user can bypass anything `hidden` on the `client` and/or directly send requests to the `firebaseSDK`.
 
-On the `cloud` side, **only** trust firebase's copy of `custom claims` and **never** trust the user provided data. This is available via the firebase `adminSDK`. The actual `security` that `custom claims` provides is in establishing `security rules`. These cause any `request` that violates a rule (i.e Only users with an `admin` custom claim can read the `foo` collection) to fail.
+On the `cloud` side, **only** trust firebase's copy of `custom claims` and **never** trust the user provided data. This is available via the firebase `adminSDK`, which also provides a method to verify the user's `jwt token`. The actual `security` that `custom claims` provides is in establishing `firestore rules`. These cause any `request` that violates a rule (i.e Only users with an `admin` custom claim can read the `foo` collection) to fail.
 
 By combining both you gain the `user experience` benefits in the client, and the `security` benefits on the cloud. A user should not be able to access `features` their role isn't permitted to via the `dashboard`. If they do, the `UI` should warn them they lack access. If they try to access or alter the `data` anyways, it should fail as their role(s) lack the `read`/`write` access to that feature.
 

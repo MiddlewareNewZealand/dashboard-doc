@@ -4,7 +4,7 @@ title: Role Map
 sidebar_label: Role Map
 sidebar_position: 2
 last_update:
-  date: 2026/02/10
+  date: 2026/03/31
   author: Ijaan Yudana
 ---
 
@@ -22,23 +22,23 @@ last_update:
 
 ## Collections and assigned roles
 
-| Collection       | Role (r/w)                             |
-| ---------------- | -------------------------------------- |
-| profile          | ALL (r\*) [^1]                         |
-| ALL utilisation  | SMT, FINANCE, JOB MANAGER (r\*)[^2]    |
-| ALL forecast     | SMT, FINANCE, JOB MANAGER (r*/w*) [^3] |
-| hiring           | SMT (r/w)                              |
-| leads            | ADMIN, SMT (r)                         |
-| ALL times        | SMT (r)[^4]                            |
-| leave            | ALL (r)                                |
-| jobs             | ALL (r\*)[^5]                          |
-| clients          | SMT                                    |
-| widget approvals | ADMIN (r/w)                            |
-| ALL travelplans  | ALL (r/w) [^6]                         |
-| Banner           | ALL (r/w\*)[^7]                        |
-| events           | ALL (r)                                |
-| useful links     | ALL (r/w) [^8]                         |
-| widget-data      | ALL (r/w) [^9]                         |
+| Collection       | Role (r/w)                        |
+| ---------------- | --------------------------------- |
+| profile          | ALL (r\*) [^1]                    |
+| ALL utilisation  | FINANCE, JOB MANAGER (r\*)[^2]    |
+| ALL forecast     | FINANCE, JOB MANAGER (r*/w*) [^3] |
+| hiring           | SMT (r/w)                         |
+| leads            | ADMIN, SMT (r)                    |
+| ALL times        | SMT (r)[^4]                       |
+| leave            | ALL (r)                           |
+| jobs             | ALL (r\*)[^5]                     |
+| clients          | SMT                               |
+| widget approvals | ADMIN (r/w)                       |
+| ALL travelplans  | ALL (r/w) [^6]                    |
+| Banner           | ALL (r/w\*)[^7]                   |
+| events           | ALL (r)                           |
+| useful links     | ALL (r/w) [^8]                    |
+| widget-data      | ALL (r/w) [^9]                    |
 
 :::info
 
@@ -50,6 +50,10 @@ last_update:
   :::
 
 [^1]: Excl. contractEndDate - restricted to SMT
+
+:::danger
+TODO: Only write operations can restrict a field via firestore rules.Technically, contractEndDate is actually being pulled, this needs to be changed. Either via a profile-sensitive collection or subcollection i.e smt-data.
+:::
 
 [^2]: Job Managers can only access job data pertaining to their own job + job_manager_index data, profile data, jobIds
 
