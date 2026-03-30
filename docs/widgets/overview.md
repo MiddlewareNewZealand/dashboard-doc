@@ -32,15 +32,11 @@ Adds a divider line to the menu
 
 #### Default
 
-Any other type e.g `switch` is treated as `default`. It will automatically save the `value` to the `key`, but otherwisse has no special functionality.
+Any other type e.g `switch` is treated as `default`. It will automatically save the `value` to the `key`, but otherwise has no special functionality.
 
 ## Firestore
 
 Widget data is stored in firestore under `widget-data`. Each user controls a document using their `email` as the id. This document contains their layout and a subcollection of widgets and widget persistent data.
-
-:::warning
-There seems to currently be a flaw that old widget persistent data doesn't get removed when the widget gets removed.
-:::
 
 ## Adding a widget
 

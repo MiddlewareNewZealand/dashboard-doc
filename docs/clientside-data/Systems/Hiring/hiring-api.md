@@ -1,8 +1,8 @@
 ---
 id: hiring-page-api
-title: Api and Redux
-sidebar_label: Api + Redux
-sidebar_position: 7
+title: Hiring 
+sidebar_label: Hiring
+sidebar_position: 1
 last_update:
   date: 2025/08/11
   author: Ijaan Yudana
